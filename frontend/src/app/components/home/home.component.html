@@ -1,0 +1,30 @@
+
+<div class="container game_cards">
+    <div class="row">
+        <div class="col-md-6 col-lg-4" *ngFor="let i of allArrays; let iIndex = index">
+            <div class="card border-primary mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col text-center" style="margin-top: 15px;"><h3>Game #{{iIndex}}</h3></div>
+                        <div class="col text-center"><a type="button" class="btn btn-success" [routerLink]="['/play', iIndex]">Play Game</a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container matrika">
+                        <div class="row" *ngFor="let j of allArrays[iIndex]; let jIndex = index">
+                            <div class="col" *ngFor="let k of allArrays[iIndex][jIndex]; let kIndex = index">
+                            <div *ngIf="allArrays[iIndex][jIndex][kIndex] == 0; else secondaryButton">
+                              <button type="button" class="btn btn-primary btn-sm gumbek"></button>
+                            </div>
+                            <ng-template #secondaryButton>
+                              <input type="checkbox" id="btnCheck{{iIndex}}-{{jIndex}}" class="btn-check" [checked]="isChecked(iIndex, jIndex, kIndex)">
+                              <label for="btnCheck{{iIndex}}-{{jIndex}}" class="btn btn-outline-primary btn-sm gumbek"></label>        
+                            </ng-template>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>

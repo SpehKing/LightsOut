@@ -1,0 +1,15 @@
+.matrika {
+    margin-top: 70px;
+    display: grid;
+    grid-gap: 25px;
+    justify-content: center;
+}
+
+
+
+.gumb{
+    margin-top: 70px;
+    margin-left: 17.5px;
+    margin-right: 17.5px;
+    width: 25%;
+}

@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+      <div class="col-7 col-sm-7 col-md-5 col-lg-4 offset-3 offset-lg-2 d-flex align-items-center">
+        <h2>Choose grid size:</h2>
+      </div>
+      <div class="col-7 col-sm-7 col-md-6 col-lg-4 offset-3 offset-lg-0 d-flex align-items-center">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked (click)="setSize(3)">
+          <label class="btn btn-outline-primary" for="btnradio1">3</label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (click)="setSize(4)">
+          <label class="btn btn-outline-primary" for="btnradio2">4</label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" (click)="setSize(5)">
+          <label class="btn btn-outline-primary" for="btnradio3">5</label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" (click)="setSize(6)">
+          <label class="btn btn-outline-primary" for="btnradio4">6</label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" (click)="setSize(7)">
+          <label class="btn btn-outline-primary" for="btnradio5">7</label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" (click)="setSize(8)">
+          <label class="btn btn-outline-primary" for="btnradio6">8</label>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="container matrika">
+  <div class="row" *ngFor="let i of array; let iIndex = index; trackBy: trackByFn" >
+    <div class="col" *ngFor="let j of array[iIndex]; let jIndex = index; trackBy: trackByFn">
+      <div *ngIf="array[iIndex][jIndex] == 0; else secondaryButton">
+        <button type="button" class="btn btn-primary btn-lg" (click)="updateArray(iIndex, jIndex)">‎ ‎ ‎</button>
+      </div>
+      <ng-template #secondaryButton>
+        <input type="checkbox" id="btnCheck{{iIndex}}-{{jIndex}}" class="btn-check" [checked]="isChecked(iIndex, jIndex)" (click)="updateArray(iIndex, jIndex)">
+        <label for="btnCheck{{iIndex}}-{{jIndex}}" class="btn btn-primary btn-lg">‎ ‎ ‎   </label>        
+      </ng-template>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row" style="justify-content: center;">
+    <button type="button" class="btn btn-primary btn-danger gumb" (click)="resetGame()">Reset</button>
+    <button type="button" class="btn btn-primary btn-success gumb" (click)="createGame()">Create</button>
+  </div>
+</div>

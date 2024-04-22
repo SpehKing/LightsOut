@@ -1,0 +1,19 @@
+<div class="container matrika">
+  <div class="row" *ngFor="let i of copyOfCurrentArray; let iIndex = index; trackBy: trackByFn" >
+    <div class="col" *ngFor="let j of copyOfCurrentArray[iIndex]; let jIndex = index; trackBy: trackByFn">
+      <div *ngIf="copyOfCurrentArray[iIndex][jIndex] == 0; else secondaryButton">
+        <button type="button" class="btn btn-primary btn-lg" (click)="updateArray(iIndex, jIndex)">‎ ‎ ‎</button>
+      </div>
+      <ng-template #secondaryButton>
+        <input type="checkbox" id="btnCheck{{iIndex}}-{{jIndex}}" class="btn-check" [checked]="isChecked(iIndex, jIndex)" (click)="updateArray(iIndex, jIndex)">
+        <label for="btnCheck{{iIndex}}-{{jIndex}}" class="btn btn-primary btn-lg">‎ ‎ ‎   </label>        
+      </ng-template>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="row" style="justify-content: center;">
+      <button type="button" class="btn btn-primary btn-danger gumb" (click)="resetGame()">Reset</button>
+      <button type="button" class="btn btn-primary btn-success gumb" (click)="solveGame()">Solve</button>
+    </div>
+  </div>

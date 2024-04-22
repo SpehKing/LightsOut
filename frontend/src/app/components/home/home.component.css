@@ -1,0 +1,11 @@
+.matrika {
+    display: grid;
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.gumbek{
+    margin-left: auto;
+    height: 15px;
+    width: 15px;
+}
