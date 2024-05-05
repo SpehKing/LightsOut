@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedDataService } from '../../services/shared-data.service'
-import { routes } from '../../app.routes';
+import { SharedDataService } from '../../services/shared-data.service';
 import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'] // Correct the property name from `styleUrl` to `styleUrls`
 })
 export class HomeComponent {
-  allArrays!: number[][][];
-  isModalOpen = false;
+  grids!: { state: number[][], solution: number[][] }[];
 
-  isChecked(iIndex: number, jIndex: number, kIndeks: number): boolean {
-    return this.allArrays[iIndex][jIndex][kIndeks] == 1;
+  isChecked(iIndex: number, jIndex: number, kIndex: number): boolean {
+    // Assuming we are checking the 'state' for lights being 'on' or 'off'
+    return this.grids[iIndex].state[jIndex][kIndex] === 1;
   }
 
   constructor(private sharedDataService: SharedDataService) {
@@ -25,6 +23,6 @@ export class HomeComponent {
   }
 
   loadGridArray(): void {
-    this.allArrays = this.sharedDataService.getGridArray();
+    this.grids = this.sharedDataService.getGridArray(); // Adapt to new structure
   }
 }

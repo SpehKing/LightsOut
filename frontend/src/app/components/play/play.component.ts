@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedDataService } from '../../services/shared-data.service'
+import { SharedDataService } from '../../services/shared-data.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
@@ -8,63 +8,67 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './play.component.html',
-  styleUrl: './play.component.css'
+  styleUrls: ['./play.component.css']  // Correctly use styleUrls
 })
 export class PlayComponent {
-  allArrays!: number[][][];
   currentArray!: number[][];
   copyOfCurrentArray!: number[][];
+  currentSolution!: number[][];
   gameId!: number;
+  showSolution: boolean = false;  // Flag for toggling solution visibility
+  showVictoryModal: boolean = false;  // Flag for showing victory modal
 
-  constructor(private sharedDataService: SharedDataService, private route: ActivatedRoute) {
+  constructor(private sharedDataService: SharedDataService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    const gameIdParam = this.route.snapshot.paramMap.get('gameId');
+    this.gameId = gameIdParam ? parseInt(gameIdParam, 10) : 0;
+    this.loadGridArray();
   }
 
   trackByFn(index: any, item: any) {
     return index;
   }
 
-  ngOnInit() {
-    // Access the index from the route parameter
-    const gameIdParam = this.route.snapshot.paramMap.get('gameId');
-    this.gameId = gameIdParam ? parseInt(gameIdParam, 10) : 0; // Parse to number, default to null if not present
-
-    this.loadGridArray();
-  }
-
   isChecked(iIndex: number, jIndex: number): boolean {
-    return this.copyOfCurrentArray[iIndex][jIndex] == 1; // Example condition
+    return this.copyOfCurrentArray[iIndex][jIndex] === 1;
   }
+
   updateArray(x: number, y: number): void {
-    this.copyOfCurrentArray[x][y] = this.copyOfCurrentArray[x][y] === 1 ? 0 : 1;
-    if (x > 0) {
-        this.copyOfCurrentArray[x - 1][y] = this.copyOfCurrentArray[x - 1][y] === 1 ? 0 : 1;
-    }
-    if (x < this.copyOfCurrentArray.length - 1) {
-        this.copyOfCurrentArray[x + 1][y] = this.copyOfCurrentArray[x + 1][y] === 1 ? 0 : 1;
-    }
-    if (y > 0) {
-        this.copyOfCurrentArray[x][y - 1] = this.copyOfCurrentArray[x][y - 1] === 1 ? 0 : 1;
-    }
-    if (y < this.copyOfCurrentArray[x].length - 1) {
-        this.copyOfCurrentArray[x][y + 1] = this.copyOfCurrentArray[x][y + 1] === 1 ? 0 : 1;
-    }
-    console.log(`x: ${x} y: ${y}`);
-    console.log(this.copyOfCurrentArray);
-}
-
-
-  resetGame() {
-    this.copyOfCurrentArray = this.currentArray.map(innerArray => innerArray.slice());
+    this.copyOfCurrentArray[x][y] ^= 1;
+    this.toggleNeighbors(x, y);
+    this.checkVictory();
   }
 
-  solveGame() {
-    console.log("Solving game...");
+  toggleNeighbors(x: number, y: number): void {
+    if (x > 0) this.copyOfCurrentArray[x - 1][y] ^= 1;
+    if (x < this.copyOfCurrentArray.length - 1) this.copyOfCurrentArray[x + 1][y] ^= 1;
+    if (y > 0) this.copyOfCurrentArray[x][y - 1] ^= 1;
+    if (y < this.copyOfCurrentArray[x].length - 1) this.copyOfCurrentArray[x][y + 1] ^= 1;
+  }
+
+  checkVictory(): void {
+    const isVictory = this.copyOfCurrentArray.every(row => row.every(cell => cell === 0));
+    if (isVictory) {
+      this.showVictoryModal = true;
+      console.log('You won!');
+    }
+  }
+
+  resetGame(): void {
+    this.copyOfCurrentArray = this.currentArray.map(innerArray => innerArray.slice());
+    this.showSolution = false;
+    this.showVictoryModal = false;
+  }
+
+  toggleSolutionVisibility(): void {
+    this.showSolution = !this.showSolution;
   }
 
   loadGridArray(): void {
-    this.allArrays = this.sharedDataService.getGridArray();
-    this.currentArray = this.allArrays[this.gameId];
+    const gridData = this.sharedDataService.getGridArray();
+    this.currentArray = gridData[this.gameId].state;
+    this.currentSolution = gridData[this.gameId].solution;
     this.copyOfCurrentArray = this.currentArray.map(innerArray => innerArray.slice());
   }
-  
 }

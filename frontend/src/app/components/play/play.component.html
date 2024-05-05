@@ -1,19 +1,32 @@
 <div class="container matrika">
-  <div class="row" *ngFor="let i of copyOfCurrentArray; let iIndex = index; trackBy: trackByFn" >
+  <!-- Game Grid -->
+  <div class="row" *ngFor="let i of copyOfCurrentArray; let iIndex = index; trackBy: trackByFn">
     <div class="col" *ngFor="let j of copyOfCurrentArray[iIndex]; let jIndex = index; trackBy: trackByFn">
       <div *ngIf="copyOfCurrentArray[iIndex][jIndex] == 0; else secondaryButton">
-        <button type="button" class="btn btn-primary btn-lg" (click)="updateArray(iIndex, jIndex)">‎ ‎ ‎</button>
+        <button type="button" class="btn btn-primary btn-lg" (click)="updateArray(iIndex, jIndex)">
+          <span *ngIf="showSolution && currentSolution[iIndex][jIndex] == 1" class="dot"></span>‎ ‎ ‎
+        </button>
       </div>
       <ng-template #secondaryButton>
         <input type="checkbox" id="btnCheck{{iIndex}}-{{jIndex}}" class="btn-check" [checked]="isChecked(iIndex, jIndex)" (click)="updateArray(iIndex, jIndex)">
-        <label for="btnCheck{{iIndex}}-{{jIndex}}" class="btn btn-primary btn-lg">‎ ‎ ‎   </label>        
+        <label for="btnCheck{{iIndex}}-{{jIndex}}" class="btn btn-primary btn-lg">
+          <span *ngIf="showSolution && currentSolution[iIndex][jIndex] == 1" class="dot"></span>‎ ‎ ‎
+        </label>
       </ng-template>
     </div>
   </div>
 </div>
+
+<!-- Victory Modal -->
+<div class="container victory-container" *ngIf="showVictoryModal">
+  <h1>You won!</h1>
+</div>
+
+
+<!-- Control Buttons -->
 <div class="container">
     <div class="row" style="justify-content: center;">
       <button type="button" class="btn btn-primary btn-danger gumb" (click)="resetGame()">Reset</button>
-      <button type="button" class="btn btn-primary btn-success gumb" (click)="solveGame()">Solve</button>
+      <button type="button" class="btn btn-primary btn-success gumb" (click)="toggleSolutionVisibility()">Solve</button>
     </div>
   </div>

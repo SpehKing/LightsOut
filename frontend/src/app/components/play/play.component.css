@@ -11,3 +11,23 @@
     margin-right: 17.5px;
     width: 25%;
 }
+
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .victory-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Use fixed to make it appear over other content */
+    margin-left: 10%;
+  }
