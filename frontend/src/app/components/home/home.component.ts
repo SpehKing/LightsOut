@@ -8,13 +8,12 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'] // Correct the property name from `styleUrl` to `styleUrls`
+  styleUrls: ['./home.component.css'] 
 })
 export class HomeComponent {
   grids!: { state: number[][], solution: number[][] }[];
 
   isChecked(iIndex: number, jIndex: number, kIndex: number): boolean {
-    // Assuming we are checking the 'state' for lights being 'on' or 'off'
     return this.grids[iIndex].state[jIndex][kIndex] === 1;
   }
 
@@ -23,6 +22,6 @@ export class HomeComponent {
   }
 
   loadGridArray(): void {
-    this.grids = this.sharedDataService.getGridArray(); // Adapt to new structure
+    this.grids = this.sharedDataService.getGridArray();
   }
 }

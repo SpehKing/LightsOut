@@ -14,7 +14,7 @@ export class CreateComponent {
   size!: number;
   array: number[][] = [];
   solution: number[][] = [];
-  showAnimation: boolean = false;  // Control variable for the animation
+  showAnimation: boolean = false;
 
   constructor(private sharedDataService: SharedDataService) {
     this.setSize(3);
@@ -40,10 +40,10 @@ export class CreateComponent {
 
   async createGame() {
     this.showAnimation = true;
-    await new Promise(resolve => setTimeout(resolve, 2000));  // Wait for 2 seconds
+    await new Promise(resolve => setTimeout(resolve, 2000)); 
     this.sharedDataService.addToAllArrays(this.array, this.solution);
     this.resetGame();
-    this.showAnimation = false;  // Hide the animation after the process
+    this.showAnimation = false;  
   }
 
   resetGame() {

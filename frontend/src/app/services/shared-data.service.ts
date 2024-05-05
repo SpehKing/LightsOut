@@ -10,7 +10,7 @@ export class SharedDataService {
   }[];
 
   constructor() {
-    this.loadGridArray(); // This method initializes gridArray
+    this.loadGridArray();
   }
 
   getGridArray(): { state: number[][]; solution: number[][]; }[] {

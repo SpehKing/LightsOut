@@ -8,16 +8,15 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.css']  // Correctly use styleUrls
+  styleUrls: ['./play.component.css']  
 })
 export class PlayComponent {
   currentArray!: number[][];
   copyOfCurrentArray!: number[][];
   currentSolution!: number[][];
   gameId!: number;
-  showSolution: boolean = false;  // Flag for toggling solution visibility
-  showVictoryModal: boolean = false;  // Flag for showing victory modal
-
+  showSolution: boolean = false;  
+  showVictoryModal: boolean = false;  
   constructor(private sharedDataService: SharedDataService, private route: ActivatedRoute) {}
 
   ngOnInit() {

@@ -28,6 +28,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed; /* Use fixed to make it appear over other content */
-    margin-left: 10%;
+    position: fixed; 
   }
